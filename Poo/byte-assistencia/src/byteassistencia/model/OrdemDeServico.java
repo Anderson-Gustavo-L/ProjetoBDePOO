@@ -1,5 +1,8 @@
 package byteassistencia.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrdemDeServico {
     private Long idOS;
     private Long idCliente;
@@ -8,6 +11,11 @@ public class OrdemDeServico {
     private String dataAbertura;
     private String status;
     private String descricaoProblema;
+    private List<ItemCobravel> itens;
+
+    public OrdemDeServico() {
+        this.itens = new ArrayList<>();
+    }
 
     public OrdemDeServico(Long idOS, Long idCliente, Long idAparelho, Long idTecnico, String dataAbertura, String status, String descricaoProblema) {
         this.idOS = idOS;
@@ -17,6 +25,7 @@ public class OrdemDeServico {
         this.dataAbertura = dataAbertura;
         this.status = status;
         this.descricaoProblema = descricaoProblema;
+        this.itens = new ArrayList<>();
     }
 
     public Long getIdOS() {
@@ -74,4 +83,17 @@ public class OrdemDeServico {
     public void setDescricaoProblema(String descricaoProblema) {
         this.descricaoProblema = descricaoProblema;
     }
+
+    public void adicionarItem(ItemCobravel item) {
+        this.itens.add(item);
+    }
+
+    public double calcularValorTotal() {
+        double total = 0.0;
+        for (ItemCobravel item : itens) {
+            total += item.calcularValor();
+        }
+        return total;
+    }
+
 }
