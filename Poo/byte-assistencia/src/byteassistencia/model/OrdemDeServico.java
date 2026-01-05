@@ -8,7 +8,7 @@ public class OrdemDeServico {
     private Long idCliente;
     private Long idAparelho;
     private Long idTecnico;
-    private String dataAbertura;
+    private java.time.LocalDate dataAbertura;
     private String status;
     private String descricaoProblema;
     private List<ItemCobravel> itens;
@@ -17,7 +17,7 @@ public class OrdemDeServico {
         this.itens = new ArrayList<>();
     }
 
-    public OrdemDeServico(Long idOS, Long idCliente, Long idAparelho, Long idTecnico, String dataAbertura, String status, String descricaoProblema) {
+    public OrdemDeServico(Long idOS, Long idCliente, Long idAparelho, Long idTecnico, java.time.LocalDate dataAbertura, String status, String descricaoProblema) {
         this.idOS = idOS;
         this.idCliente = idCliente;
         this.idAparelho = idAparelho;
@@ -60,11 +60,11 @@ public class OrdemDeServico {
         this.idTecnico = idTecnico;
     }
 
-    public String getDataAbertura() {
+    public java.time.LocalDate getDataAbertura() {
         return dataAbertura;
     }
 
-    public void setDataAbertura(String dataAbertura) {
+    public void setDataAbertura(java.time.LocalDate dataAbertura) {
         this.dataAbertura = dataAbertura;
     }
 
@@ -95,5 +95,7 @@ public class OrdemDeServico {
         }
         return total;
     }
+
+
 
 }
