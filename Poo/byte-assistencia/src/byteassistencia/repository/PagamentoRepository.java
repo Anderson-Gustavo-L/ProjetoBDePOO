@@ -1,21 +1,22 @@
-package comByteRepository;
+package byteassistencia.repository;
 
-import comByteModel.Pagamento;
+
+import byteassistencia.model.Pagamento;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PagamentoRepository {
     private List<Pagamento> pagamentos = new ArrayList<>();
-    private int proximoId = 1;
+    private Long proximoId = 1L;
 
     public void salvar(Pagamento pagamento) {
         pagamento.setIdPagamento(proximoId++);
         pagamentos.add(pagamento);
     }
 
-    public Pagamento buscarPorId(int id) {
+    public Pagamento buscarPorId(Long id) {
         for (Pagamento p : pagamentos) {
-            if (p.getIdPagamento() == id) {
+            if (p.getIdPagamento().equals(id)) {
                 return p;
             }
         }
@@ -26,7 +27,7 @@ public class PagamentoRepository {
         return pagamentos;
     }
 
-    public void deletar(int id) {
-        pagamentos.removeIf(p -> p.getIdPagamento() == id);
+    public void deletar(Long id) {
+        pagamentos.removeIf(p -> p.getIdPagamento().equals(id));
     }
 }

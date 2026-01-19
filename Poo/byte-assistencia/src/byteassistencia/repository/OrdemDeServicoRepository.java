@@ -1,21 +1,21 @@
-package comByteRepository;
+package byteassistencia.repository;
 
-import comByteModel.OrdemDeServico;
+import byteassistencia.model.OrdemDeServico;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrdemDeServicoRepository {
     private List<OrdemDeServico> ordens = new ArrayList<>();
-    private int proximoId = 1;
+    private Long proximoId = 1L;
 
     public void salvar(OrdemDeServico os) {
         os.setIdOS(proximoId++);
         ordens.add(os);
     }
 
-    public OrdemDeServico buscarPorId(int id) {
+    public OrdemDeServico buscarPorId(Long id) {
         for (OrdemDeServico os : ordens) {
-            if (os.getIdOS() == id) {
+            if (os.getIdOS().equals(id)) {
                 return os;
             }
         }
@@ -28,14 +28,14 @@ public class OrdemDeServicoRepository {
 
     public void atualizar(OrdemDeServico osAtualizada) {
         for (int i = 0; i < ordens.size(); i++) {
-            if (ordens.get(i).getIdOS() == osAtualizada.getIdOS()) {
+            if (ordens.get(i).getIdOS().equals(osAtualizada.getIdOS())) {
                 ordens.set(i, osAtualizada);
                 return;
             }
         }
     }
 
-    public void deletar(int id) {
-        ordens.removeIf(os -> os.getIdOS() == id);
+    public void deletar(Long id) {
+        ordens.removeIf(os -> os.getIdOS().equals(id));
     }
 }

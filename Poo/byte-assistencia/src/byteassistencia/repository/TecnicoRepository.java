@@ -1,21 +1,21 @@
-package comByteRepository;
+package byteassistencia.repository;
 
-import comByteModel.Tecnico;
+import byteassistencia.model.Tecnico;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TecnicoRepository {
     private List<Tecnico> tecnicos = new ArrayList<>();
-    private int proximoId = 1;
+    private Long proximoId = 1L;
 
     public void salvar(Tecnico tecnico) {
         tecnico.setId(proximoId++);
         tecnicos.add(tecnico);
     }
 
-    public Tecnico buscarPorId(int id) {
+    public Tecnico buscarPorId(Long id) {
         for (Tecnico t : tecnicos) {
-            if (t.getId() == id) {
+            if (t.getId().equals(id)) {
                 return t;
             }
         }
@@ -28,14 +28,14 @@ public class TecnicoRepository {
 
     public void atualizar(Tecnico tecnicoAtualizado) {
         for (int i = 0; i < tecnicos.size(); i++) {
-            if (tecnicos.get(i).getId() == tecnicoAtualizado.getId()) {
+            if (tecnicos.get(i).getId().equals(tecnicoAtualizado.getId())) {
                 tecnicos.set(i, tecnicoAtualizado);
                 return;
             }
         }
     }
 
-    public void deletar(int id) {
-        tecnicos.removeIf(t -> t.getId() == id);
+    public void deletar(Long id) {
+        tecnicos.removeIf(t -> t.getId().equals(id));
     }
 }

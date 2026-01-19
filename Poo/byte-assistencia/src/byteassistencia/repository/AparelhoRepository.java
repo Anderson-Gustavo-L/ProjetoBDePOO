@@ -1,21 +1,21 @@
-package comByteRepository;
+package byteassistencia.repository;
 
-import comByteModel.Aparelho;
+import byteassistencia.model.Aparelho;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AparelhoRepository {
     private List<Aparelho> aparelhos = new ArrayList<>();
-    private int proximoId = 1;
+    private Long proximoId = 1L;
 
     public void salvar(Aparelho aparelho) {
         aparelho.setIdAparelho(proximoId++);
         aparelhos.add(aparelho);
     }
 
-    public Aparelho buscarPorId(int id) {
+    public Aparelho buscarPorId(Long id) {
         for (Aparelho a : aparelhos) {
-            if (a.getIdAparelho() == id) {
+            if (a.getIdAparelho().equals(id)) {
                 return a;
             }
         }
@@ -28,14 +28,16 @@ public class AparelhoRepository {
 
     public void atualizar(Aparelho aparelhoAtualizado) {
         for (int i = 0; i < aparelhos.size(); i++) {
-            if (aparelhos.get(i).getIdAparelho() == aparelhoAtualizado.getIdAparelho()) {
+            if (aparelhos.get(i).getIdAparelho().equals(aparelhoAtualizado.getIdAparelho())) {
+
                 aparelhos.set(i, aparelhoAtualizado);
                 return;
             }
         }
     }
 
-    public void deletar(int id) {
-        aparelhos.removeIf(a -> a.getIdAparelho() == id);
+    public void deletar(Long id) {
+        aparelhos.removeIf(a -> a.getIdAparelho().equals(id));
+
     }
 }
