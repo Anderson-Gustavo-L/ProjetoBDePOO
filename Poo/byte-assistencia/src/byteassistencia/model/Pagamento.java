@@ -7,6 +7,10 @@ public class Pagamento {
     private Double valor;
     private String data;
 
+    public Pagamento() {
+    }
+
+
     public Pagamento(Long idPagamento, Long idOs, String forma, Double valor, String data) {
         this.idPagamento = idPagamento;
         this.idOs = idOs;
@@ -14,6 +18,9 @@ public class Pagamento {
         this.valor = valor;
         this.data = data;
     }
+
+
+
 
     public Long getIdPagamento() {
         return idPagamento;

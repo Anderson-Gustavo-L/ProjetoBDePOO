@@ -13,6 +13,19 @@ public class Produto implements ItemCobravel {
         this.valorUnitario = valorUnitario;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public double getValorUnitario() {
+        return valorUnitario;
+    }
+
+
     @Override
     public double calcularValor() {
         return quantidade * valorUnitario;

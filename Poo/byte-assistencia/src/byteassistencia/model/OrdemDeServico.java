@@ -84,6 +84,11 @@ public class OrdemDeServico {
         this.descricaoProblema = descricaoProblema;
     }
 
+    public java.util.List<ItemCobravel> getItens() {
+        return itens;
+    }
+
+
     public void adicionarItem(ItemCobravel item) {
         this.itens.add(item);
     }
