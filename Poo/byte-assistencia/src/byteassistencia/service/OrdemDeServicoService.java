@@ -45,7 +45,6 @@ public class OrdemDeServicoService {
             throw new ClienteNaoEncontradoException("Cliente não encontrado: " + idCliente);
         }
 
-        // aqui você faz validação de descrição
         if (descricaoProblema == null || descricaoProblema.isBlank()) {
             throw new DadosInvalidosException("Descrição do problema não pode ser vazia.");
         }
@@ -60,15 +59,6 @@ public class OrdemDeServicoService {
             throw new DadosInvalidosException("Aparelho não encontrado: " + idAparelho);
         }
 
-        if (ordemDeServico == null) {
-            throw new DadosInvalidosException("Ordem de serviço não pode ser nula.");
-        }
-        if (item == null) {
-            throw new DadosInvalidosException("Item não pode ser nulo.");
-        }
-
-        ordemDeServico.adicionarItem(item);
-
         OrdemDeServico os = new OrdemDeServico();
         os.setIdCliente(idCliente);
         os.setIdAparelho(idAparelho);
@@ -82,6 +72,7 @@ public class OrdemDeServicoService {
         return os;
     }
 
+
     public double calcularValorTotal(OrdemDeServico ordemDeServico) {
         return ordemDeServico.calcularValorTotal();
     }
@@ -89,6 +80,7 @@ public class OrdemDeServicoService {
     public void adicionarItemOrdem(OrdemDeServico ordemDeServico, ItemCobravel item) {
         ordemDeServico.adicionarItem(item);
     }
+
 
     public void fecharOrdemDeServico(OrdemDeServico ordemDeServico) {
         ordemDeServico.setStatus("FECHADA");

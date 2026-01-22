@@ -169,14 +169,33 @@ public class Main {
                     try {
                         System.out.print("ID da OS: ");
                         Long idOs = sc.nextLong();
-                        sc.nextLine();
+                        sc.nextLine(); // consumir quebra de linha
 
-                        System.out.print("Forma de pagamento: ");
-                        String forma = sc.nextLine();
+                        System.out.println("Forma de pagamento: 1-Dinheiro, 2-Cartão, 3-Pix");
+                        System.out.print("Opção: ");
+                        int opcaoForma = sc.nextInt();
+                        sc.nextLine(); // consumir quebra de linha
+
+                        String forma = null;
+
+                        switch (opcaoForma) {
+                            case 1:
+                                forma = "DINHEIRO";
+                                break;
+                            case 2:
+                                forma = "CARTAO";
+                                break;
+                            case 3:
+                                forma = "PIX";
+                                break;
+                            default:
+                                System.out.println("Opção de forma de pagamento inválida.");
+                                return; // sai do case 6 sem tentar registrar
+                        }
 
                         System.out.print("Valor do pagamento: ");
                         double valor = sc.nextDouble();
-                        sc.nextLine();
+                        sc.nextLine(); // consumir quebra de linha
 
                         pagamentoService.registrarPagamento(idOs, forma, valor);
                         System.out.println("Pagamento registrado com sucesso para OS " + idOs);
@@ -186,6 +205,7 @@ public class Main {
                         System.out.println("Erro de pagamento: " + e.getMessage());
                     }
                     break;
+
                 case 7:
                     System.out.print("ID da OS: ");
                     Long idOsDetalhe = sc.nextLong();
