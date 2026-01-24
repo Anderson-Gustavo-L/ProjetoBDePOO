@@ -2,19 +2,25 @@ package byteassistencia.service;
 
 import byteassistencia.model.OrdemDeServico;
 import byteassistencia.model.Pagamento;
+import byteassistencia.model.Cliente;
 import byteassistencia.repository.OrdemDeServicoRepository;
 import byteassistencia.repository.PagamentoRepository;
+import byteassistencia.repository.ClienteRepository;
 import byteassistencia.exception.DadosInvalidosException;
 import byteassistencia.exception.PagamentoInsuficienteException;
+import byteassistencia.exception.ClienteNaoEncontradoException;
 
 public class PagamentoService {
-
     private OrdemDeServicoRepository osRepo;
     private PagamentoRepository pagRepo;
+    private ClienteRepository clienteRepo; // ADICIONAR
 
-    public PagamentoService(OrdemDeServicoRepository osRepo, PagamentoRepository pagRepo) {
+    public PagamentoService(OrdemDeServicoRepository osRepo,
+                            PagamentoRepository pagRepo,
+                            ClienteRepository clienteRepo) { // ADICIONAR
         this.osRepo = osRepo;
         this.pagRepo = pagRepo;
+        this.clienteRepo = clienteRepo; // ADICIONAR
     }
 
     public void registrarPagamento(Long idOs, String forma, double valor) {
@@ -22,15 +28,22 @@ public class PagamentoService {
         if (os == null) {
             throw new DadosInvalidosException("OS não encontrada: " + idOs);
         }
+
+        // ADICIONAR VALIDAÇÃO DO CLIENTE
+        Cliente cliente = clienteRepo.buscarPorId(os.getIdCliente());
+        if (cliente == null) {
+            throw new ClienteNaoEncontradoException("Cliente não encontrado: " + os.getIdCliente());
+        }
+
         if (forma == null || forma.isBlank()) {
             throw new DadosInvalidosException("Forma de pagamento inválida.");
         }
+
         if (valor <= 0) {
             throw new DadosInvalidosException("Valor do pagamento deve ser positivo.");
         }
 
         double total = os.calcularValorTotal();
-        // aqui você pode somar pagamentos anteriores usando pagRepo.listarTodos() filtrando por id_os, se quiser
         if (valor < total) {
             throw new PagamentoInsuficienteException("Pagamento menor que o valor da OS.");
         }
@@ -39,12 +52,9 @@ public class PagamentoService {
         pag.setIdOs(idOs);
         pag.setForma(forma);
         pag.setValor(valor);
-
         java.time.LocalDate hoje = java.time.LocalDate.now();
-        String dataStr = hoje.toString(); // "2026-01-21" por exemplo
+        String dataStr = hoje.toString();
         pag.setData(dataStr);
-
         pagRepo.salvar(pag);
-
     }
 }
