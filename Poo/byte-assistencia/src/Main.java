@@ -1,3 +1,11 @@
+/**
+ @ALUNO: CICERO GALDINO JANUARIO DE ARAUJO JUNIOR
+ @MATRÍCULA: 2025ADSGR0060
+ 
+ @ALUNO ANDERSON GUSTAVO
+ @MATRÍCULA: 20251ADSGR0213
+ */
+
 import byteassistencia.exception.PagamentoInsuficienteException;
 import byteassistencia.model.*;
 import byteassistencia.repository.*;
