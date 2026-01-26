@@ -1,6 +1,6 @@
 package byteassistencia.repository;
 
-import byteassistencia.model.Cliente; // Importando o Cliente que você criou antes
+import byteassistencia.model.Cliente;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class ClienteRepository {
     private Long proximoId = 1L;
 
     public void salvar(Cliente cliente) {
-        cliente.setId(proximoId++); // Gera o ID e aumenta o contador
+        cliente.setId(proximoId++);
         clientes.add(cliente);
     }
 
@@ -19,8 +19,18 @@ public class ClienteRepository {
                 return c;
             }
         }
-        return null; // Retorna null se não achar ninguém
+        return null;
     }
+
+    public Cliente buscarPorCPF(String cpf) {
+        for (Cliente c : clientes) {
+            if (c.getCpf().equals(cpf)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
 
     public List<Cliente> listarTodos() {
         return clientes;
@@ -29,14 +39,13 @@ public class ClienteRepository {
     public void atualizar(Cliente clienteAtualizado) {
         for (int i = 0; i < clientes.size(); i++) {
             if (clientes.get(i).getId().equals(clienteAtualizado.getId())) {
-                clientes.set(i, clienteAtualizado); // Troca o velho pelo novo
+                clientes.set(i, clienteAtualizado);
                 return;
             }
         }
     }
 
     public void deletar(Long id) {
-        // Remove da lista quem tiver esse ID
         clientes.removeIf(c -> c.getId().equals(id));
     }
 }

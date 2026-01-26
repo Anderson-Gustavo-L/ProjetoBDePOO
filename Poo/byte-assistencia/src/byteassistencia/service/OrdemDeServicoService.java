@@ -3,6 +3,7 @@ package byteassistencia.service;
 import byteassistencia.model.*;
 import byteassistencia.exception.DadosInvalidosException;
 import byteassistencia.exception.ClienteNaoEncontradoException;
+import byteassistencia.exception.OSFechadaException;
 
 import byteassistencia.model.Cliente;
 import byteassistencia.model.Tecnico;
@@ -59,6 +60,11 @@ public class OrdemDeServicoService {
             throw new DadosInvalidosException("Aparelho não encontrado: " + idAparelho);
         }
 
+        if (!aparelho.getIdCliente().equals(idCliente)) {
+            throw new DadosInvalidosException("Aparelho não pertence ao cliente informado.");
+        }
+
+
         OrdemDeServico os = new OrdemDeServico();
         os.setIdCliente(idCliente);
         os.setIdAparelho(idAparelho);
@@ -78,8 +84,12 @@ public class OrdemDeServicoService {
     }
 
     public void adicionarItemOrdem(OrdemDeServico ordemDeServico, ItemCobravel item) {
+        if ("FECHADA".equals(ordemDeServico.getStatus())) {
+            throw new OSFechadaException("Não é possível adicionar itens em OS fechada.");
+        }
         ordemDeServico.adicionarItem(item);
     }
+
 
 
     public void fecharOrdemDeServico(OrdemDeServico ordemDeServico) {

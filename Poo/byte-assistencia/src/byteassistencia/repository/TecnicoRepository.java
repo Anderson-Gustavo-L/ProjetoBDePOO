@@ -22,6 +22,16 @@ public class TecnicoRepository {
         return null;
     }
 
+    public Tecnico buscarPorCPF(String cpf) {
+        for (Tecnico t : tecnicos) {
+            if (t.getCpf().equals(cpf)) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+
     public List<Tecnico> listarTodos() {
         return tecnicos;
     }

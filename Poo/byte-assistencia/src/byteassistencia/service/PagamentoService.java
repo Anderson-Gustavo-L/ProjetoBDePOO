@@ -13,14 +13,14 @@ import byteassistencia.exception.ClienteNaoEncontradoException;
 public class PagamentoService {
     private OrdemDeServicoRepository osRepo;
     private PagamentoRepository pagRepo;
-    private ClienteRepository clienteRepo; // ADICIONAR
+    private ClienteRepository clienteRepo;
 
     public PagamentoService(OrdemDeServicoRepository osRepo,
                             PagamentoRepository pagRepo,
-                            ClienteRepository clienteRepo) { // ADICIONAR
+                            ClienteRepository clienteRepo) {
         this.osRepo = osRepo;
         this.pagRepo = pagRepo;
-        this.clienteRepo = clienteRepo; // ADICIONAR
+        this.clienteRepo = clienteRepo;
     }
 
     public void registrarPagamento(Long idOs, String forma, double valor) {
@@ -29,10 +29,17 @@ public class PagamentoService {
             throw new DadosInvalidosException("OS não encontrada: " + idOs);
         }
 
-        // ADICIONAR VALIDAÇÃO DO CLIENTE
         Cliente cliente = clienteRepo.buscarPorId(os.getIdCliente());
         if (cliente == null) {
             throw new ClienteNaoEncontradoException("Cliente não encontrado: " + os.getIdCliente());
+        }
+
+        if ("FECHADA".equals(os.getStatus())) {
+            throw new DadosInvalidosException("OS já está fechada.");
+        }
+
+        if (os.getItens() == null || os.getItens().isEmpty()) {
+            throw new DadosInvalidosException("Não é possível pagar uma OS sem itens.");
         }
 
         if (forma == null || forma.isBlank()) {
